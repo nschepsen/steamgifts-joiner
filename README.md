@@ -21,6 +21,15 @@ Just load it into your userscript manager application
 
 ## CHANGELOG ##
 
-### SteamGifts!JOINER 0.1, updated @ 2019-10-08 ###
+### SteamGifts!JOINER 0.2.0, updated @ 2019-10-29 ###
+
+* Added option to remove an entry
+* Added option to switch between "Hide-a-Giveaway" and "Remove-a-Giveaway" after joining it
+* Revised code and application structure
+* Added Infinite Page Scroll Effect
+* Set the header static, always on TOP while scrolling
+* Removed some unnecessary UI elements
+
+### SteamGifts!JOINER 0.1.0, updated @ 2019-10-08 ###
 
 * Initial Release
