@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           SteamGifts!JOINER
 // @namespace      eu.schepsen.sgj
-// @version        0.2.0
+// @version        0.2.1
 // @description    SteamGifts!JOINER helps you enter giveaways saving thousands of unnecessary clicks
 // @author         nschepsen
 // @match          https://*.steamgifts.com
@@ -19,13 +19,13 @@ function match(regex, el, callback = value => value) {
 
 /* Settings */
 
-// Turn on-off the hiding of joined Giveaways
+// Hide all entered Giveaways
 var hideGiveaways = GM_getValue('hideGiveaways', false);
-// Current page number (Infinity Page Scroll)
+// Current Page (@see infinity page scrolling)
 var page = 1;
-// Enum, used for buttonToggle() & syncing css classes
+// Enum represents the .btn css class toggling/syncing (@see buttonToggle())
 const mode = { 'SYNC': 1, 'TOGGLE': 2 };
-// Global amount of SteamGifts Points
+// SteamGifts Points
 var __MY_POINTS__ = match('\\d+', $('.nav__points'), parseInt);
 
 /* Buttons Classes */
@@ -45,14 +45,17 @@ const DATA = [ {
 ];
 
 function requiredPoints(el) {
+
     return match('\\d+P', el.find('.giveaway__heading__thin'), parseInt);
 }
 
 function isFaded(el) {
+
     return el.find('.is-faded').length > 0;
 }
 
 function toggleButton(btn, phase = mode.SYNC) {
+
     var next = ((type = getGiveawayType(btn)) + phase) % (phase << 1);
 
     if(phase === mode.SYNC) [type, next] = [next, type];
@@ -69,6 +72,7 @@ function toggleButton(btn, phase = mode.SYNC) {
 }
 
 function getGiveawayType(el) {
+
     if(el.hasClass('btn')) {
         el = el.parent().parent();
     }
@@ -78,33 +82,25 @@ function getGiveawayType(el) {
 function updateView() {
     $('.giveaway__row-outer-wrap').each(function(i, scope) {
         if(!$(this).find('.btn').length) {
-        /* Compute chance of winning in percentage */
-            var copies = match('\\d+ Copies',
-                $(this).find('.giveaway__heading__thin:first'),
-                value => value === null ? 1 : parseInt(value));
+            var copies = match('\\d+ Copies', $(this).find('.giveaway__heading__thin:first'), value => value === null ? 1 : parseInt(value));
             var participants = match('\\d+', $(this).find('.giveaway__links a:first'));
             var chance = 100 * copies * Math.pow(participants, -1);
-            var winChanceField = '<div><i class="fa fa-trophy"></i> WIN: ' + chance.toFixed(2) + '%</div>';
-        /* Prepend the chance to Giveaway's Columns */
+            var winChanceField = '<div><i class="fa fa-trophy"></i> WIN: '+ chance.toFixed(2) +'%</div>';
             $(this).find('.giveaway__columns').prepend(winChanceField);
-        /* Create a join button */
+/* Create a button and prepend it to Giveaway's Inner Wrap */
             var button = $('<div></div>', {
                 'code': $(this).find('a').attr('href').split('/')[2],
                 'class': 'btn ' + DATA[getGiveawayType($(this))].class,
                 'text': DATA[getGiveawayType($(this))].text,
                 'style': 'font-weight: normal; padding: 18px 10px; margin: 0 15px 0 0; width: 120px;'
             });
-        /* Prepend the button to Giveaway's inner Wrap */
             $(this).find('.giveaway__row-inner-wrap').prepend(button);
         }
-    /* Check if we have to hide it */
-        if(isFaded($(this)) && hideGiveaways) { $(this).hide(); return; }
+        if(isFaded($(this)) && hideGiveaways) { $(this).hide(); return; } /* Check if we have to hide a Giveaway */
         if(!hideGiveaways && $(this).is(':hidden'))
             $(this).show();
-    /* Check if we have to sync button classes */
-        if(!(button = $(this).find('.btn')).hasClass(DATA[type = getGiveawayType($(this))].class)) {
-            toggleButton(button, mode.SYNC);
-        }
+/* Check if we have to sync button classes */
+        if(!(button = $(this).find('.btn')).hasClass(DATA[type = getGiveawayType($(this))].class)) toggleButton(button, mode.SYNC);
     });
 
     $('.giveaway_image_thumbnail').css('border-radius', '4px');
@@ -137,15 +133,18 @@ function createView() {
 
 /* Beautify Pinned Giveaways Decorations */
 
-    $('.pinned-giveaways__button').click();
     $('.page__heading').css('text-transform', 'uppercase');
+    $('.pinned-giveaways__button').click();
     $('.pinned-giveaways__inner-wrap').removeClass();
+
+    $('.pinned-giveaways__outer-wrap').find('.giveaway__row-outer-wrap:visible').css('border-bottom', '0')
 
 /* Others (no avatar, rounded icons, etc.) */
 
-    $('.page__outer-wrap').css('padding-top', '70px')
     $('.giveaway_image_thumbnail').css('border-radius', '4px');
+    $('.page__outer-wrap').css('padding-top', '70px');
     $('.pagination').parent().children().slice(4).remove();
+    $('.giveaway__row-outer-wrap').parent().addClass('giveaways');
 
 /* Let keep the header static, always on TOP while scrolling */
 
@@ -154,12 +153,7 @@ function createView() {
     $('header').css('width', '100%'); $('header').css('z-index', '10');
 }
 
-(function() {
-
-$('.giveaway__row-outer-wrap').parent().last().addClass('giveaways');
-
-    createView();
-    updateView();
+(function() { createView(); updateView();
 
 /* Handler: Turn On-Off the hideGiveaways Option */
 
@@ -171,9 +165,7 @@ $('.giveaway__row-outer-wrap').parent().last().addClass('giveaways');
 
     $(window).scroll(function () {
         if($(document).height() - $(this).height() == $(this).scrollTop()) {
-
             var selector = '.giveaway__row-outer-wrap';
-
             $.get('/giveaways/search?page=' + (++page), function(response) {
 
                 var gs = $('<div>').html(response).find(selector);
