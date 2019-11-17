@@ -11,7 +11,7 @@
 // @require        https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
 // ==/UserScript==
 
-'use strict'; var $ = window.$;
+'use strict'; var $ = window.$; var version = '0.2.1'
 
 function match(regex, el, callback = value => value) {
     return callback(el.text().replace(',', '').match(regex));
@@ -21,8 +21,6 @@ function match(regex, el, callback = value => value) {
 
 // Hide all entered Giveaways
 var hideGiveaways = GM_getValue('hideGiveaways', false);
-// Current Page (@see infinity page scrolling)
-var page = 1;
 // Enum represents the .btn css class toggling/syncing (@see buttonToggle())
 const mode = { 'SYNC': 1, 'TOGGLE': 2 };
 // SteamGifts Points
@@ -103,6 +101,8 @@ function updateView() {
         if(!(button = $(this).find('.btn')).hasClass(DATA[type = getGiveawayType($(this))].class)) toggleButton(button, mode.SYNC);
     });
 
+    if(!$('.giveaway__row-outer-wrap:visible').length) $('.pagination').hide();
+
     $('.giveaway_image_thumbnail').css('border-radius', '4px');
     $('.giveaway_image_avatar').remove();
 
@@ -130,6 +130,11 @@ function createView() {
     $('.sgj input').css('vertical-align', 'middle'); $('.sgj label').css('vertical-align', 'middle');
 
     $('#hideGAs').prop('checked', hideGiveaways);
+
+    $('.pagination__results').css('font-family', 'Open Sans');
+    $('.pagination__results').css('font-size', '12px');
+    $('.pagination__results').css('font-style', 'normal');
+    $('.pagination__results').html('https://github.com/nschepsen/steamgifts-joiner: <strong>SteamGifts!JOINER v'+ version +'</strong>');
 
 /* Beautify Pinned Giveaways Decorations */
 
@@ -165,12 +170,17 @@ function createView() {
 
     $(window).scroll(function () {
         if($(document).height() - $(this).height() == $(this).scrollTop()) {
-            var selector = '.giveaway__row-outer-wrap';
-            $.get('/giveaways/search?page=' + (++page), function(response) {
+            var wrap = '.giveaway__row-outer-wrap';
+            var pagination = '.pagination__navigation';
+            var href = $('a.is-selected').next().attr('href');
 
-                var gs = $('<div>').html(response).find(selector);
+            if(typeof(href) === 'undefined') return;
 
-                $(selector).parent().last().append(gs.slice(gs.length - 50));  updateView();
+            $.get(href, function(response) {
+                $(wrap).parent().last().append(
+                    $(response).find(wrap).slice(-50)
+                    );
+                $(pagination).html($(response).find(pagination)); updateView();
             });
         }
     });
