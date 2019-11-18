@@ -7,15 +7,7 @@
 
 **S**teamGifts!**J**OINER helps you enter giveaways saving thousands of unnecessary clicks
 
-## DEPENDENCIES ##
-
-An userscript manager depending on your preference, e.g. [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=de)
-
-## USAGE ##
-
-Just load it into your userscript manager application
-
-## WHAT'S IMPLEMENTED?! ##
+### WHAT'S NEW?! ###
 
 * Joining Giveaways without opening them
 * Hiding&Showing of the entered GAs
@@ -24,9 +16,17 @@ Just load it into your userscript manager application
 * Estimating win probability for each Giveaway
 * "Thank-You" function to thank the giveaway Creator
 
+## DEPENDENCIES ##
+
+An userscript manager depending on your preference, e.g. [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=de)
+
+## USAGE ##
+
+Just load it into your userscript manager application
+
 ## SCREENSHOTS ##
 
-![SteamGifts!JOINER 0.1](https://i.imgur.com/IXOcAp9.gif) <!---![SteamGifts!JOINER 0.1](https://i.imgur.com/JoU2HzF.png)-->
+![SteamGifts!JOINER 0.1](docs/screenshots/v0.2.0.gif)
 
 ## CHANGELOG ##
 
