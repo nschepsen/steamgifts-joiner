@@ -15,11 +15,25 @@ An userscript manager depending on your preference, e.g. [Tampermonkey](https://
 
 Just load it into your userscript manager application
 
+## WHAT'S IMPLEMENTED?! ##
+
+* Joining Giveaways without opening them
+* Hiding&Showing of the entered GAs
+* Infinity Page Scrolling
+* Optimized UI (removed or/and reimplemented some UI elements)
+* Estimating win probability for each Giveaway
+* "Thank-You" function to thank the giveaway Creator
+
 ## SCREENSHOTS ##
 
-![SteamGifts!JOINER 0.1](https://i.imgur.com/JoU2HzF.png)
+![SteamGifts!JOINER 0.1](https://i.imgur.com/IXOcAp9.gif) <!---![SteamGifts!JOINER 0.1](https://i.imgur.com/JoU2HzF.png)-->
 
 ## CHANGELOG ##
+
+### SteamGifts!JOINER 0.2.1, updated @ 2019-11-17 ###
+
+* Fixed small bugs
+* Added a function to "Thank" the Giveaway Creator
 
 ### SteamGifts!JOINER 0.2.0, updated @ 2019-10-29 ###
 
