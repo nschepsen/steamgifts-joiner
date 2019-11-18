@@ -6,6 +6,7 @@
 // @author         nschepsen
 // @match          https://*.steamgifts.com
 // @match          https://*.steamgifts.com/giveaways/search*
+// @match          https://*.steamgifts.com/giveaways/won*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @require        https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
@@ -156,6 +157,32 @@ function createView() {
     $('header').css('padding', '10px 0');
     $('header').css('position', 'fixed');
     $('header').css('width', '100%'); $('header').css('z-index', '10');
+
+/* Handle Say-Thank-You Function (Add a Comment) */
+
+    $('.table__row-inner-wrap').each(function(i, scope) {
+        var thankYou = $('<div></div>', {
+            'href': $(this).find('a').attr('href'),
+            'text': 'Add a Comment',
+            'class': 'sidebar__entry-insert thanks',
+            'style': 'font-size: 12px; font-weight: normal; margin-bottom: 0;'
+        });
+        $(this).find('div').first().html(thankYou);
+
+        $(this).find('div').first().after(
+                $('<div><input name="comment" value="Thank You!" style="text-align: center;"/></div>')
+            );
+    });
+    $('.table__column__key__redeem').remove();
+    $('.table__row-inner-wrap').on('click', '.thanks', function() {
+        $.post($(this).attr('href'), {
+            'do': 'comment_new',
+            'parent_id': '',
+            'description': $(this).parent().parent().find('input[name="comment"]').val(),
+            'xsrf_token': $('input[name="xsrf_token"]').val(),
+        }, function(data, status) {
+            alert("Data: " + data + "\nStatus: " + status); });
+    });
 }
 
 (function() { createView(); updateView();
