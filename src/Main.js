@@ -158,31 +158,37 @@ function createView() {
     $('header').css('position', 'fixed');
     $('header').css('width', '100%'); $('header').css('z-index', '10');
 
-/* Handle Say-Thank-You Function (Add a Comment) */
+/* Handle Thank-You Function (Add a Comment) */
 
+    var cell = '<div class="table__column--width-medium text-center"></div>';
+
+    $('.table__heading').prepend($(cell).text('Leave a Comment'));
+    $('.table__column__key__redeem').remove();
     $('.table__row-inner-wrap').each(function(i, scope) {
         var thankYou = $('<div></div>', {
             'href': $(this).find('a').attr('href'),
-            'text': 'Add a Comment',
+            'text': 'Add',
             'class': 'sidebar__entry-insert thanks',
-            'style': 'font-size: 12px; font-weight: normal; margin-bottom: 0;'
+            'style': 'font-size: 12px; font-weight: normal; margin: 0 15px 0 0;',
         });
+        $(this).find('div').first().addClass('table__column--width-medium');
+        $(this).find('div').first().css('display', 'flex');
         $(this).find('div').first().html(thankYou);
-
-        $(this).find('div').first().after(
-                $('<div><input name="comment" value="Thank You!" style="text-align: center;"/></div>')
-            );
+        $(this).find('div').first().append('<input name="comment" value="Thank You!" style="font-size: 12px; text-align: center;"/>');
     });
-    $('.table__column__key__redeem').remove();
-
     $('.table__row-inner-wrap').on('click', '.thanks', function() {
+
+        var comment = $(this).parent().parent().find('input[name="comment"]').val();
+
+        if (!confirm('Do you wanna add a comment? ' + comment))
+            return;
         $.post($(this).attr('href'), {
             'do': 'comment_new',
             'parent_id': '',
-            'description': comment = $(this).parent().parent().find('input[name="comment"]').val(),
+            'description': comment,
             'xsrf_token': $('input[name="xsrf_token"]').val(),
         }, function(data, status) {
-            alert('Comment: ' + comment + ' (' + status.toUpperCase() +')'); });
+            console.log('Comment: ' + comment + ' (' + status.toUpperCase() +')'); });
     });
 }
 
