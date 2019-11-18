@@ -174,14 +174,15 @@ function createView() {
             );
     });
     $('.table__column__key__redeem').remove();
+
     $('.table__row-inner-wrap').on('click', '.thanks', function() {
         $.post($(this).attr('href'), {
             'do': 'comment_new',
             'parent_id': '',
-            'description': $(this).parent().parent().find('input[name="comment"]').val(),
+            'description': comment = $(this).parent().parent().find('input[name="comment"]').val(),
             'xsrf_token': $('input[name="xsrf_token"]').val(),
         }, function(data, status) {
-            alert("Data: " + data + "\nStatus: " + status); });
+            alert('Comment: ' + comment + ' (' + status.toUpperCase() +')'); });
     });
 }
 
