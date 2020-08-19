@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           SteamGifts!JOINER
 // @namespace      eu.schepsen.sgj
-// @version        0.2.1
+// @version        0.2.2
 // @description    SteamGifts!JOINER helps you enter giveaways saving thousands of unnecessary clicks
 // @author         nschepsen
 // @match          https://*.steamgifts.com
@@ -119,6 +119,7 @@ function createView() {
     $('.featured__container').remove();
     $('.sidebar__mpu').remove();
     $('.giveaway_image_avatar').remove();
+    $('.vm-placement').parent().remove();
 
 /* Add SteamGifts!JOINER menubar */
 
