@@ -12,7 +12,7 @@
 // @require        https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
 // ==/UserScript==
 
-'use strict'; var $ = window.$; var version = '0.2.1'
+'use strict'; var $ = window.$; var version = '0.2.2'
 
 function match(regex, el, callback = value => value) {
     return callback(el.text().replace(',', '').match(regex));
@@ -120,6 +120,7 @@ function createView() {
     $('.sidebar__mpu').remove();
     $('.giveaway_image_avatar').remove();
     $('.vm-placement').parent().remove();
+    $('div[id^="div-gpt-ad-"]').parent().parent().remove()
 
 /* Add SteamGifts!JOINER menubar */
 

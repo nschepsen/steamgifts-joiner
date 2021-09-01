@@ -30,25 +30,23 @@ Just load it into your userscript manager application
 
 ## CHANGELOG ##
 
-Legend: [**R**] Removed  [**F**] Fixed [**A**] Added [**I**] Information
-
 ### SteamGifts!JOINER 0.2.2, updated @ 2020-08-19 ###
 
-* [R] unnecessary advertising DOM elements
+* Remove unnecessary advertising DOM elements
 
 ### SteamGifts!JOINER 0.2.1, updated @ 2019-11-17 ###
 
-* [F] small bugs and typos
-* [A] function to "thank" the giveaway creator by adding a customizable comment
+* Fix small bugs and typos
+* Add a function to "thank" the giveaway creator by adding a customizable comment
 
 ### SteamGifts!JOINER 0.2.0, updated @ 2019-10-29 ###
 
-* [A] option to remove an entry
-* [A] option to switch between "Hide-a-Giveaway" and "Remove-a-Giveaway" after joining it
-* [A] infinite page scroll effect
-* [A] static header positioned always on TOP
-* [R] unnecessary UI elements
-* [I] revised code and application structure
+* Add the option to remove an entry
+* Add the option to switch between "Hide-a-Giveaway" and "Remove-a-Giveaway" after joining it
+* Add the infinite page scroll effect
+* Add a static header positioned always on TOP
+* Remove unnecessary UI elements
+* Revise the code & application structure
 
 ### SteamGifts!JOINER 0.1.0, updated @ 2019-10-08 ###
 
